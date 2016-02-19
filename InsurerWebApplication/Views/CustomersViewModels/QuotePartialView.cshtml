@@ -1,0 +1,41 @@
+﻿@model PURUSInsurance.Models.QuotesViewModel
+
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+<div id="result"></div>
+
+<div id="EditQuoteForm" style="width:auto; background-color:inherit ">
+    @using (Ajax.BeginForm("UpdateQuote", "CustomersViewModels", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "result", InsertionMode = InsertionMode.Replace }))
+    {
+        
+        <div style="text-align:center;vertical-align:bottom " >
+            @Html.HiddenFor(m => m.ID)
+            <label> @Html.DisplayFor(m => m.FullName)</label>
+        </div>
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label>Minimum Coverage</label>
+                
+                <div style="text-align:center"> @Html.EditorFor(model => model.MinimumCoverage) </div>
+                    @Html.ValidationMessageFor(model => model.MinimumCoverage, "", new { @class = "text-danger" })
+                
+            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label>Maximum Coverage</label>
+                <div style="text-align:center"> @Html.EditorFor(model => model.MaximumCoverage) </div>
+                    @Html.ValidationMessageFor(model => model.MaximumCoverage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="text-align:right">
+            <input type="submit" value="Submit">
+        </div>
+
+    }
+
+</div>

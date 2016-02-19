@@ -1,0 +1,121 @@
+﻿<div id="EditQuoteForm" > </div>
+
+@model PURUSInsurance.Models.SearchPageViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<h4>@ViewBag.Message </h4>
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Full Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Age
+        </th>
+        <th>
+            Total Years of Insurance
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            Insurance Type
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.CustomersViewModel)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YearsOfInsurance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InsuranceType)
+        </td>
+        <td>
+            <button class="EditQuote" onclick="selectionClick(@item.ID)">Edit Quote</button>
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<script>
+
+    var myDialog;
+
+    function selectionClick(selection)
+    {
+        $.post('@Url.Action("GetQuotePartialView", "CustomersViewModels")', { UserID: selection }, function (data) {
+            myDialog.html(data);
+            myDialog.dialog({ autoOpen: true });
+
+        });
+    }
+    $(function () {
+        myDialog = $("#EditQuoteForm").dialog({
+            title: "Update Quote",
+            modal: true,
+            autoOpen: false,
+            minHeight: '700px',
+            width: '400px',
+            
+
+        });
+
+        
+        });
+</script>
+
+
+
+
+<ul class="pager">
+    <li class="previous">
+        <a href="~/CustomersViewModels/NextPage">Previous</a>
+    </li>
+    <li>
+        <ul class="pagination">
+            <li>@Html.ActionLink("1", "Index", new { PageNumber = 1 }) </li>
+            <li>@Html.ActionLink("2", "Index", new { PageNumber = 2 }) </li>
+            <li>@Html.ActionLink("3", "Index", new { PageNumber = 3 }) </li>
+            <li>@Html.ActionLink("4", "Index", new { PageNumber = 4 }) </li>
+            <li>@Html.ActionLink("5", "Index", new { PageNumber = 5 }) </li>
+        </ul>
+    </li>
+
+    <li class="next">
+            <a href="~/CustomersViewModels/NextPage">Next</a>
+    </li>
+</ul>
+
