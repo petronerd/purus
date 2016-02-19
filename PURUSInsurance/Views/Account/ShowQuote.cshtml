@@ -1,0 +1,74 @@
+﻿@model PURUSInsurance.Models.QuotesViewModel
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<div>
+    <h4>QuotesViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinimumCoverage)
+        </dt>
+
+        @if (Model.Status == Services.QuoteStatus.Ready)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.MinimumCoverage)
+            </dd>
+        }
+        else
+        {
+            <dd>
+                To be announced soon
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaximumCoverage)
+        </dt>
+
+        @if (Model.Status == Services.QuoteStatus.Ready)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.MaximumCoverage)
+            </dd>
+        }
+        else
+        {
+            <dd>
+                To be announced soon
+            </dd>
+        }
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+
