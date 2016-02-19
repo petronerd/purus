@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MyInsuranceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Password" Type="nvarchar" MaxLength="200" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Age" Type="int" />
+    <Property Name="YearsOfInsurance" Type="int" />
+    <Property Name="City" Type="nvarchar" MaxLength="20" />
+    <Property Name="InsuranceType" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Insurers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Quotes">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerID" Type="int" Nullable="false" />
+    <Property Name="InsurerID" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="10" />
+    <Property Name="MinimumCoverage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="MaximumCoverage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsDefault" Type="bit" />
+  </EntityType>
+  <Association Name="FK_CustomerQuote">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Quotes" Type="Self.Quotes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Quotes">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MyInsuranceDBModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Insurers" EntityType="Self.Insurers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Quotes" EntityType="Self.Quotes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CustomerQuote" Association="Self.FK_CustomerQuote">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Quotes" EntitySet="Quotes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
